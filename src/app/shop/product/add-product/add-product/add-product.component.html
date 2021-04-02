@@ -1,0 +1,70 @@
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">Add Product</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form [formGroup]="ProductForm" id="general-form-extended" (ngSubmit)="onSubmit()">
+        <div class="card-body">
+            <div class="form-group">
+                <label for="exampleInputName">Name</label>
+                <input type="text" class=" form-control" formControlName="name" id="name" placeholder="Enter Name">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPrice">Price</label>
+                <input type="text" class="form-control" formControlName="price" id="price" placeholder="Price">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPrice">Marque</label>
+                <input type="text" class="form-control" formControlName="marque" id="marque" placeholder="Price">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputDate">Creation Date</label>
+                <input type="date" class="form-control" formControlName="date" id="date" placeholder="Date">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPromotion">Promotion</label>
+                <input type="text" class="form-control" formControlName="Promotion_Price" id="Promotion_Price"
+                    placeholder="Promotion">
+            </div>
+
+            <div class="form-group">
+                <label class="col-form-label"><span>*</span> Sexe</label>
+                <label class="d-block" for="edo-ani">
+
+                    <input class="radio_animated" id="edo-ani" type="radio" formControlName="sexe" value="male"
+                        name="sexe">
+                    Male
+                </label>
+                <label class="d-block" for="edo-ani">
+                    <input class="radio_animated" id="edo-ani" type="radio" formControlName="sexe" value="Female"
+                        name="sexe">
+                    Female
+                </label>
+            </div>
+
+
+            <div class="form-group">
+                <label for="exampleInputFile">File input</label>
+                <div class="input-group">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="file" name="file">
+                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                    </div>
+                    <div class="input-group-append">
+                        <span class="input-group-text" id="">Upload</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+            </div>
+        </div>
+        <!-- /.card-body -->
+
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>

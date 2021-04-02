@@ -15,6 +15,7 @@ import { BannersComponent } from './product/banners/banners.component';
 import { ProductTabsComponent } from './product/product-tabs/product-tabs.component';
 import { MultiSliderComponent } from './product/multi-slider/multi-slider.component';
 
+
 @NgModule({
   declarations: [
     TitleComponent,
@@ -26,6 +27,7 @@ import { MultiSliderComponent } from './product/multi-slider/multi-slider.compon
     BannersComponent,
     ProductTabsComponent,
     MultiSliderComponent
+
   ],
   imports: [
     CommonModule,

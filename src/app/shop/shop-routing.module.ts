@@ -21,6 +21,8 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { SuccessComponent } from './checkout/success/success.component';
 
 import { Resolver } from '../shared/services/resolver.service';
+import { AddProductComponent } from './product/add-product/add-product/add-product.component';
+import { ListProductComponent } from './product/list-product/list-product/list-product.component';
 
 const routes: Routes = [
   {
@@ -107,7 +109,18 @@ const routes: Routes = [
   {
     path: 'checkout/success/:id',
     component: SuccessComponent
+  },
+  {
+    path: 'addproduct',
+    component: AddProductComponent
+
+  },
+  {
+    path: 'listproduct',
+    component: ListProductComponent
+
   }
+
 ];
 
 @NgModule({

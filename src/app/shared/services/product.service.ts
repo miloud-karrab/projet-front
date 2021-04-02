@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, startWith, delay } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { Product } from '../classes/product';
+import { ProductEcommerce } from 'src/app/Entity/product';
 
 const state = {
   products: JSON.parse(localStorage['products'] || '[]'),
@@ -11,7 +12,16 @@ const state = {
   compare: JSON.parse(localStorage['compareItems'] || '[]'),
   cart: JSON.parse(localStorage['cartItems'] || '[]')
 }
-
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Accept': 'application/json',
+  })
+};
+const httpOptionsPatch = {
+  headers: new HttpHeaders({
+    'Accept': 'application/json+merge-patch',
+  })
+};
 @Injectable({
   providedIn: 'root'
 })
@@ -20,7 +30,19 @@ export class ProductService {
   public Currency = { name: 'Dollar', currency: 'USD', price: 1 } // Default Currency
   public OpenCart: boolean = false;
   public Products
+  /* ADD Product*/
+  addProduct(product: ProductEcommerce): Observable<ProductEcommerce> {
+    return this.http.post<ProductEcommerce>('http://127.0.0.1:8000/api/product_ecommerces', product, httpOptions);
+  }
+  updateProduct(product: ProductEcommerce): Observable<ProductEcommerce> {
+    return this.http.put<ProductEcommerce>(`${'http://127.0.0.1:8000/api/product_ecommerces'}/${product.id}`, product, httpOptions);
+  }
 
+  getListProduct(): Observable<any> {
+
+    return this.http.get<any>('http://localhost:8000/api/product_ecommerces');
+
+  }
   constructor(private http: HttpClient,
     private toastrService: ToastrService) { }
 
@@ -44,10 +66,10 @@ export class ProductService {
 
   // Get Products By Slug
   public getProductBySlug(slug: string): Observable<Product> {
-    return this.products.pipe(map(items => { 
-      return items.find((item: any) => { 
-        return item.title.replace(' ', '-') === slug; 
-      }); 
+    return this.products.pipe(map(items => {
+      return items.find((item: any) => {
+        return item.title.replace(' ', '-') === slug;
+      });
     }));
   }
 
@@ -145,11 +167,11 @@ export class ProductService {
     const qty = product.quantity ? product.quantity : 1;
     const items = cartItem ? cartItem : product;
     const stock = this.calculateStockCounts(items, qty);
-    
-    if(!stock) return false
+
+    if (!stock) return false
 
     if (cartItem) {
-        cartItem.quantity += qty    
+      cartItem.quantity += qty
     } else {
       state.cart.push({
         ...product,
@@ -177,12 +199,12 @@ export class ProductService {
     })
   }
 
-    // Calculate Stock Counts
+  // Calculate Stock Counts
   public calculateStockCounts(product, quantity) {
     const qty = product.quantity + quantity
     const stock = product.stock
     if (stock < qty || stock == 0) {
-      this.toastrService.error('You can not add more items than available. In stock '+ stock +' items.');
+      this.toastrService.error('You can not add more items than available. In stock ' + stock + ' items.');
       return false
     }
     return true
@@ -201,7 +223,7 @@ export class ProductService {
     return this.cartItems.pipe(map((product: Product[]) => {
       return product.reduce((prev, curr: Product) => {
         let price = curr.price;
-        if(curr.discount) {
+        if (curr.discount) {
           price = curr.price - (curr.price * curr.discount / 100)
         }
         return (prev + price * curr.quantity) * this.Currency.price;
@@ -217,7 +239,7 @@ export class ProductService {
 
   // Get Product Filter
   public filterProducts(filter: any): Observable<Product[]> {
-    return this.products.pipe(map(product => 
+    return this.products.pipe(map(product =>
       product.filter((item: Product) => {
         if (!filter.length) return true
         const Tags = filter.some((prev) => { // Match Tags
@@ -235,7 +257,7 @@ export class ProductService {
   // Sorting Filter
   public sortProducts(products: Product[], payload: string): any {
 
-    if(payload === 'ascending') {
+    if (payload === 'ascending') {
       return products.sort((a, b) => {
         if (a.id < b.id) {
           return -1;
@@ -280,7 +302,7 @@ export class ProductService {
         }
         return 0;
       })
-    } 
+    }
   }
 
   /*
@@ -296,22 +318,22 @@ export class ProductService {
     let paginateRange = 3;
 
     // ensure current page isn't out of range
-    if (currentPage < 1) { 
-      currentPage = 1; 
-    } else if (currentPage > totalPages) { 
-      currentPage = totalPages; 
+    if (currentPage < 1) {
+      currentPage = 1;
+    } else if (currentPage > totalPages) {
+      currentPage = totalPages;
     }
-    
+
     let startPage: number, endPage: number;
     if (totalPages <= 5) {
       startPage = 1;
       endPage = totalPages;
-    } else if(currentPage < paginateRange - 1){
+    } else if (currentPage < paginateRange - 1) {
       startPage = 1;
       endPage = startPage + paginateRange - 1;
     } else {
       startPage = currentPage - 1;
-      endPage =  currentPage + 1;
+      endPage = currentPage + 1;
     }
 
     // calculate start and end item indexes

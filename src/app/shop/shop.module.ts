@@ -14,6 +14,8 @@ import { FourImageComponent } from './product/four-image/four-image.component';
 import { ThreeColumnComponent } from './product/three-column/three-column.component';
 import { BundleProductComponent } from './product/bundle-product/bundle-product.component';
 import { ImageOutsideComponent } from './product/image-outside/image-outside.component';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+
 
 // Product Details Widgest Components
 import { ServicesComponent } from './product/widgets/services/services.component';
@@ -41,11 +43,13 @@ import { WishlistComponent } from './wishlist/wishlist.component';
 import { CompareComponent } from './compare/compare.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { SuccessComponent } from './checkout/success/success.component';
+import { AddProductComponent } from './product/add-product/add-product/add-product.component';
+import { ListProductComponent } from './product/list-product/list-product/list-product.component';
 
 
 @NgModule({
   declarations: [
-    ProductLeftSidebarComponent, 
+    ProductLeftSidebarComponent,
     ProductRightSidebarComponent,
     ProductNoSidebarComponent,
     ThreeColumnComponent,
@@ -71,7 +75,9 @@ import { SuccessComponent } from './checkout/success/success.component';
     WishlistComponent,
     CompareComponent,
     CheckoutComponent,
-    SuccessComponent
+    SuccessComponent,
+    AddProductComponent,
+    ListProductComponent
   ],
   imports: [
     CommonModule,
@@ -79,6 +85,8 @@ import { SuccessComponent } from './checkout/success/success.component';
     Ng5SliderModule,
     InfiniteScrollModule,
     SharedModule,
+    Ng2SmartTableModule,
+
     ShopRoutingModule
   ]
 })
